@@ -1,4 +1,0 @@
-basic_emotions:
-- sadness: intensity=4, reason="The mention of 'feeling a bit down' and 'stocks took a hit' indicates disappointment and negative affect."
-- anger: intensity=3, reason="The phrase 'can't help but feel frustrated' directly expresses a feeling of irritation and displeasure."
-- trust: intensity=2, reason="The statement 'I know that this is the nature of the market' demonstrates acceptance and a belief in a larger system

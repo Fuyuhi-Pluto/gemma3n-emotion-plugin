@@ -1,5 +1,0 @@
-basic_emotions:
-- sadness: intensity=4, reason="The text explicitly states 'feeling a bit down' and 'can't help but feel a bit frustrated', indicating a negative emotional state associated with loss and disappointment."
-- anger: intensity=3, reason="The phrase 'frustrated' directly expresses a feeling of annoyance and displeasure, stemming from the negative impact on the stocks."
-
-blend_emotion: None

@@ -1,3 +1,0 @@
-basic_emotions: [sadness, anger]
-reason_to_choose_basic_emotions:
- 1. sadness: "The statement 'I’m feeling a bit down today' directly indicates sadness.", 2. anger: "The phrase 'I just can’t help but feel frustrated' expresses anger."

@@ -1,6 +1,0 @@
-basic_emotions:
-- sadness: intensity=5, reason="The statement 'so sad and hopeless' directly expresses a strong feeling of sadness."
-- fear: intensity=4, reason="The thought of being 'useless' due to illness indicates a fear of negative consequences and potential inability to function."
-- sadness: intensity=4, reason="The statement 'I am so sad and hopeless' directly expresses a strong feeling of sadness."
-
-blend_emotion: None
