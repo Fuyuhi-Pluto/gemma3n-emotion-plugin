@@ -1,8 +1,8 @@
 # gemma3n-emotion-plugin
 > AI-powered emotion analysis and support system built for Google's Gemma 3n Impact Challenge
 
-[![Demo Video](https://img.shields.io/badge/Demo-Video-red)]([your-video-link](https://youtu.be/3ZsAurYd5Is))
-
+[![Demo Video](https://img.shields.io/badge/Demo-Video-red)][Video Demo](https://youtu.be/3ZsAurYd5Is)
+[Markdown语法](https://markdown.com.cn)
 ## 🎯 Project Overview
 This web application **Google’s Gemma 3n LLM** to provide **nuanced and scientifically grounded emotional analysis**.  It translates natural language into **Plutchik-based emotion insights**, offering Emotion classification, Intensity analysis, Reasoning and Visualization. 
 
