@@ -1,5 +1,0 @@
-Input Mood: I submitted my thesis today after 3 years of work. It feels surreal that this chapter is finally closing.
-
-basic_emotions:
-- joy: intensity=4, reason="It sounds like you're really celebrating a huge accomplishment! That's wonderful to hear, and it's totally okay to feel so happy after such a long journey."
-- sadness: intensity=3, reason="You mentioned it feels surreal that this chapter is closing, which makes sense – it's natural to feel a little bittersweet when something significant ends after so much dedication."

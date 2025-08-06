@@ -1,6 +1,0 @@
-basic_emotions:
-- joy: intensity=4, reason="You mentioned feeling happy after a good night's sleep and feeling refreshed, which is wonderful! It sounds like you're really enjoying this feeling."
-- anticipation: intensity=3, reason="You also mentioned feeling a bit nervous about an important meeting tomorrow. It's natural to feel a little anxious when facing something significant."
-
-companion_response:
-It sounds like you're experiencing a lovely mix of feelings

@@ -1,9 +1,0 @@
-Input Mood: Happy about my weekend plans but stressed about the deadline next week. Also feeling grateful for my supportive friends.
-
-basic_emotions:
-- joy: intensity=4, reason="You're excited about your weekend plans, and that's wonderful! It sounds like you're really looking forward to some relaxing time."
-- anticipation: intensity=3, reason="You're looking forward to your weekend plans, and that's great! It's natural to feel excited about something you're planning."
-- trust: intensity=2, reason="You mentioned feeling grateful for your supportive friends, which shows how much you value those connections."
-
-companion_response:
-What a mix of feelings! It sounds like you're really looking forward to your weekend, and it's wonderful to have such supportive friends. That deadline next week must feel a little stressful, but it's great to have something to look forward to. How are you planning to manage that stress?

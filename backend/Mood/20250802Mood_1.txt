@@ -1,6 +1,0 @@
-basic_emotions:
-- joy: intensity=5, reason="You mentioned finishing your thesis after three years of work—that's a huge accomplishment! It's totally okay to feel overjoyed and a little amazed by this milestone."
-- anticipation: intensity=3, reason="You said this chapter is closing, which implies a look forward to new possibilities. It sounds like you're excited about what comes next."
-
-companion_response:
-Oh wow, that's incredible
