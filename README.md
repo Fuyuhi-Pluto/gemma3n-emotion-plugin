@@ -30,15 +30,33 @@ Usage
 - Chat with AI companion - get personalized emotional support
 
 ## 🏗️ System Architecture
-User Input → Gemma 3n Analysis → Plutchik Mapping → Visualization → AI Companion
-     ↓              ↓                ↓              ↓            ↓
-Natural Lang → Emotion Vectors → 8D Scoring → Wheel Chart → Personalized Chat
-Core Components
 
-🤖 Emotion Analyzer: Gemma 3n-powered natural language emotion analysis
-📊 Plutchik Mapper: Scientific emotion classification and intensity scoring
-🎨 Visualization Engine: Real-time emotion wheel generation with matplotlib
-💬 AI Companion: Dynamic conversational roles created for individual users
+**User Input**  
+→ **Gemma 3n Analysis**  
+→ **Plutchik Mapping**  
+→ **Visualization**  
+→ **AI Companion**
+
+---
+
+Natural Language → Emotion Vectors → 8D Scoring → Wheel Chart → Personalized Chat
+
+---
+
+## Core Components
+
+- 🤖 **Emotion Analyzer**  
+  Gemma 3n-powered natural language emotion analysis
+
+- 📊 **Plutchik Mapper**  
+  Scientific emotion classification and intensity scoring
+
+- 🎨 **Visualization Engine**  
+  Real-time emotion wheel generation with matplotlib
+
+- 💬 **AI Companion**  
+  Dynamic conversational roles tailored to individual users
+
 
 ## 📁 Project Structure
 ```pgsql
