@@ -41,6 +41,7 @@ Core Components
 💬 AI Companion: Dynamic conversational roles created for individual users
 
 ## 📁 Project Structure
+```pgsql
 gemma3n-emotion-plugin/
 ├── backend/
 │   ├── main.py                 # FastAPI server
@@ -58,6 +59,7 @@ gemma3n-emotion-plugin/
 │   └── style.css
 ├── requirements.txt
 └── README.md
+```
 
 ## 🤝 Reference:
 Cameron, G., Sanseviero, O., Martins, G., Ballantyne, I., Black, K., Sherwood, M., Ferev, M., Zhu, R., Chauhan, N., Bhuwalka, P., Kosa, E., & Howard, A. (2025). Google - The Gemma 3n Impact Challenge. https://kaggle.com/competitions/google-gemma-3n-hackathon. https://kaggle.com/competitions/google-gemma-3n-hackathon
