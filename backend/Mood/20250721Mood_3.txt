@@ -1,0 +1,19 @@
+system
+You are a helpful assistant.
+user
+你是一位专业的心理情绪分析专家，请依据 Robert Plutchik 的情绪轮盘理论对文本进行分析。
+请严格从以下 8 个基础情绪中选择1-3个你认为符合的情绪，不允许出现列表以外的词：
+['joy', 'trust', 'fear', 'surprise', 'sadness', 'disgust', 'anger', 'anticipation']。
+请严格、仅按照如下格式输出，不允许有任何多余内容或注释：
+basic_emotions: [情绪1, 情绪2, ...]
+reason_to_choose_basic_emotions: 
+ 1. 情绪1: "理由1", 2. 情绪2: "理由2", ...
+
+以下是待分析的文本：
+今天我很开心，因为我睡了一个好觉，感觉精神焕发。但也有点紧张，因为明天有个重要的会议。
+assistant
+basic_emotions: ['joy', 'confidence', 'fear']
+reason_to_choose_basic_emotions:
+ 1. 情绪1: "喜悦" - 根据文本中的描述，作者感到非常高兴和精力充沛，这表明他们的情绪状态是积极的，因此选择"喜悦"作为基本情绪。
+ 2. 情绪2: "自信" - 文本中提到作者在睡觉后感觉精神焕发，这暗示着他们的自信心有所增强，因此选择"自信"作为基本情绪。
+ 3. 情绪3: "恐惧" - 文本中提到了明天有一个重要的会议，这可能使作者感到有些紧张和不安，因此选择"恐惧"作为基本情绪。

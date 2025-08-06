@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mood Journal Assistant</title>
+    <!-- Google Fonts: Comic Neue, Quicksand, Nunito, Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Quicksand:wght@400;700&family=Nunito:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+          --bg-main: #FFF8F2;
+          --card-bg: #FFF3EC;
+          --border-soft: #FFC2B3;
+          --accent: #FF9E85;
+          --accent-hover: #FF8266;
+          --text-main: #4E3F32;
+          --placeholder: #A59084;
+        }
+        body {
+          font-family: 'Quicksand', 'Comic Neue', 'Nunito', 'Poppins', sans-serif;
+          margin: 2em;
+          background-color: #fff8f3;
+          color: var(--text-main);
+        }
+        #result {
+          margin-top: 1em;
+          padding: 1em;
+          border: 1px solid #EADDD4;
+          background: #FFF5EC;
+          border-radius: 14px;
+          box-shadow: 0 2px 8px var(--shadow);
+        }
+        input, button, textarea {
+          font-size: 1em;
+          border-radius: 12px;
+          border: 1px solid #EADDD4;
+          box-shadow: 0 1px 4px var(--shadow);
+          padding: 0.7em 1em;
+          transition: box-shadow 0.2s, border-color 0.2s;
+        }
+        mark { font-weight: bold; border-radius: 10px; padding: 0.2em 0.5em;}
+        /* Conversation/Card styles */
+        #conversationBox {
+          background-color: #FFF3EC;
+          border-radius: 12px;
+          padding: 1em;
+          box-shadow: 0 3px 10px rgba(255, 172, 140, 0.15);
+          transition: all 0.4s ease;
+          margin-top: 0;
+          margin-left: 24px;
+          height: 100%;               /* ✅ 添加这行 */
+          display: flex;              /* ✅ 添加这行 */
+          flex-direction: column;     /* ✅ 添加这行 */
+        }
+        #conversationBox h3 {
+        font-size: 1.2em;
+        color: #FF9E6D;
+        position: relative;
+        padding-left: 1em;
+        margin-bottom: 1em;
+        }
+
+        #conversationBox h3::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.2em;
+        bottom: 0.2em;
+        width: 4px;
+        background-color: #FFAD9F;
+        border-radius: 2px;
+        }
+        .chat-history {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5em;
+          padding: 1em;
+          background: #FFF9F2;
+          border-radius: 12px;
+          min-height: 100px;
+          flex: 1;                    /* ✅ 添加这行，让它填充剩余空间 */
+          overflow-y: auto;
+          max-height: none; 
+        }
+        /* .bot-bubble {
+          max-width: 80%;
+          background-color: #FFF5EC;
+          padding: 0.8em 1em;
+          border-radius: 12px;
+          align-self: flex-start;
+          color: #5A5A5A;
+          font-style: italic;
+          border: 1px solid #EADDD4;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          line-height: 1.4;
+        }
+        .user-bubble {
+          max-width: 80%;
+          background-color: #FFAD9F;
+          padding: 0.8em 1em;
+          border-radius: 12px;
+          align-self: flex-end;
+          color: #4E3F32;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          line-height: 1.4;
+        } */
+        .bot-bubble {
+        max-width: 80%;
+        background-color: #FFF5EC;
+        padding: 0.8em 1em;
+        border-radius: 12px;
+        align-self: flex-start;
+        color: #4A4A4A;                   
+        font-style: normal;                
+        border: 1px solid #EADDD4;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        line-height: 1.6;                  
+        font-family: 'Fira Code', 'SF Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+        font-weight: 500;
+        font-size: 1.05em;
+        letter-spacing: 0.3px;             
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .user-bubble {
+        max-width: 80%;
+        background-color: #FFAD9F;
+        padding: 0.8em 1em;
+        border-radius: 12px;
+        align-self: flex-end;
+        color: #4E3F32;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        line-height: 1.6; 
+        font-family: 'Inter', 'SF Pro Text', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+        font-weight: 500;
+        font-size: 1.05em;
+        letter-spacing: 0.3px;            
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+        #chatInput {
+          padding: 0.7em 1em;
+          border-radius: 12px;
+          border: 1px solid #EADDD4;
+          width: 70%;
+          background: #FFF9F2;
+          color: #4E3F32;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        #chatSendButton {
+          padding: 0.7em 1.2em;
+          margin-left: 0.8em;
+          border: none;
+          background-color: #FFAD9F;
+          color: #4E3F32;
+          font-weight: bold;
+          border-radius: 12px;
+          cursor: pointer;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          transition: background-color 0.2s, box-shadow 0.2s;
+        }
+        #chatSendButton:hover {
+          background-color: #D9A5FF;
+          color: #FFF9F2;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        #chatSendButton:disabled {
+          background-color: #E0E0E0;
+          color: #999;
+          cursor: not-allowed;
+        }
+        /* Title */
+        h2 {
+          color: #FF9E6D;
+          letter-spacing: 1px;
+          font-family: 'Comic Neue', 'Quicksand', 'Nunito', 'Poppins', sans-serif;
+          font-size: 2em;
+          border-radius: 12px;
+        }
+        /* Button highlight */
+        button {
+          background: #FFA48E;
+          color: white;
+          font-weight: bold;
+          border: none;
+          border-radius: 16px;
+          padding: 0.6em 1.2em;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          transition: all 0.2s ease;
+        }
+        button:hover {
+          background: #FF8F78;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        button:active {
+          background: #E46950;
+          box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+          transform: scale(0.97);
+        }
+        /* Input/textarea focus */
+        input:focus, textarea:focus {
+          outline: 2px solid #FFAD9F;
+          border-color: #FFAD9F;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 1em;
+            }
+        #moodInput {
+          font-size: 1.2em;
+          padding: 0.8em 1em;
+          border-radius: 12px;
+          border: 2px solid var(--border-soft);
+          background: #FFF8F2;
+          color: var(--text-main);
+          height: 48px;
+          flex: 1;
+          resize: none;
+          max-width: 600px;
+          min-width: 240px;
+          line-height: 1.5;
+          box-shadow: none;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s;
+        }
+        #moodInput::placeholder {
+          color: var(--placeholder);
+        }
+        #moodInput:focus,
+        #moodInput:not(:placeholder-shown) {
+          background: #FFF8F2;
+          border-color: #FF9E85;
+          box-shadow: 0 0 8px rgba(255, 158, 133, 0.3);
+          transform: translateY(-2px) scale(1.02);
+        }
+        button {
+          background-color: var(--accent);
+          color: white;
+          border: none;
+          border-radius: 14px;
+          padding: 0.6em 1.2em;
+          font-weight: bold;
+          font-size: 1em;
+          height: 48px;
+          cursor: pointer;
+          transition: background-color 0.2s;
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        button:hover {
+          background-color: var(--accent-hover);
+          color: white;
+        }
+        .checkbox-label {
+          display: flex;
+          align-items: center;
+          font-size: 1em;
+          color: #6A4E42;
+          margin-left: 1em;
+          gap: 0.5em;
+          font-family: 'Comic Neue', 'Quicksand', 'Nunito', 'Poppins', sans-serif;
+        }
+        #saveMoodCircle {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          border: 2px solid #FFAD9F;
+          background: #FFF9F2;
+          position: relative;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 8px rgba(255, 158, 133, 0.10);
+        }
+        #saveMood:checked + #saveMoodCircle {
+          background: #FFAD9F;
+          box-shadow: 0 4px 12px rgba(255, 158, 133, 0.18);
+        }
+        #saveMood:checked + #saveMoodCircle::after {
+          content: '';
+          display: block;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 10px;
+          height: 10px;
+          background: #FFF9F2;
+          border-radius: 50%;
+          transform: translate(-50%, -50%);
+          box-shadow: 0 1px 2px rgba(255,158,133,0.10);
+        }
+        #inputWhisper {
+          font-size: 1.18em;
+          font-weight: 600;
+          font-style: italic;
+          color: #A86956;
+          text-align: center;
+          margin-top: 1em;
+          background: transparent;
+          padding: 0.3em 0.8em;
+          border-radius: 8px;
+          letter-spacing: 0.5px;
+          opacity: 0;
+          transition: all 0.6s ease;
+        }
+        @keyframes fadeSlideUp {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0px);
+          }
+        }
+        #inputWhisper.show {
+          opacity: 1;
+          animation: fadeSlideUp 0.6s ease forwards;
+        }
+        /* #mainContent {
+          display: flex;
+          align-items: stretch;
+          flex-direction: row;
+          justify-content: center;
+          gap: 2em;
+          margin-top: 2em;
+          min-height: 600px;          
+        } */
+        #mainContent {
+          display: grid;                    /* ✅ 改为grid */
+          grid-template-columns: 1fr 1fr;   /* ✅ 两列等宽 */
+          gap: 2em;
+          margin-top: 2em;
+          min-height: 600px;
+          align-items: stretch;             /* ✅ 子元素等高 */
+        }
+        #emotionModule, #conversationModule {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: stretch;
+        }
+
+        #emotionModule {
+          flex: 1;
+          min-width: 340px;
+          max-width: 480px;
+          margin-top: 0;
+        }
+
+        #conversationModule {
+          flex: 1;
+          min-width: 340px;
+          max-width: 520px;
+          margin-top: 0;
+        }
+        .diary-box {
+          background: #FAF6F1;
+          border: 1.5px solid #F1E0D6;
+          border-radius: 16px;
+          padding: 1.2em;
+          box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+          font-family: "Comic Neue", "Caveat", cursive;
+          position: relative;
+          background-image: repeating-linear-gradient(to bottom, transparent, transparent 1.8em, #f3e7dd 1.8em, #f3e7dd 1.9em);
+          margin-bottom: 1.2em;
+        }
+        .diary-box::before {
+          content: "";
+          position: absolute;
+          left: -10px;
+          top: 10px;
+          width: 10px;
+          height: 90%;
+          background: repeating-radial-gradient(circle, #DDBFA1 0px, #DDBFA1 4px, transparent 4px, transparent 20px);
+        }
+        .emotion-tag {
+          background: #FFFAF0;
+          border-radius: 12px;
+          padding: 0.4em 1em;
+          display: inline-block;
+          margin: 0.4em 0;
+          box-shadow: 1px 1px 3px rgba(0,0,0,0.04);
+          position: relative;
+          font-family: "Comic Neue", "Caveat", cursive;
+          color: #5C4033;
+          font-size: 1.08em;
+          border-bottom: 1px dashed #F1E0D6;
+        }
+        .emotion-tag::after {
+          content: "";
+          position: absolute;
+          top: -8px;
+          left: 8px;
+          width: 24px;
+          height: 12px;
+          background: #FFDAB9;
+          transform: rotate(-5deg);
+          border-radius: 4px;
+          z-index: 1;
+        }
+        .blended-emotions {
+          margin-top: 1em;
+          font-size: 1em;
+          color: #A86956;
+          font-family: "Comic Neue", "Caveat", cursive;
+        }
+        .emotion-row {
+          display: flex;
+          align-items: center;
+          padding: 0.6em 1em;
+          border-radius: 10px;
+          font-weight: bold;
+          color: #333;
+          font-size: 1.1em;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          margin-bottom: 0.2em;
+          letter-spacing: 0.5px;
+          font-family: 'Comic Neue', 'Quicksand', 'Nunito', 'Poppins', sans-serif;
+          transition: box-shadow 0.2s, transform 0.2s;
+          position: relative;
+          max-width: 280px;        /* 🔧 添加最大宽度限制 */
+          width: 100%;      /* 🔧 让宽度自适应内容 */
+        }
+        .emotion-left {
+          display: flex;
+          align-items: center;
+          gap: 0.5em;
+          flex: 1;
+        }
+
+        .emotion-right {
+          min-width: 6em;
+          text-align: right;
+          font-size: 1.1em;
+          font-weight: 600;
+          font-family: "Comic Neue", "Quicksand", sans-serif;
+        }
+        .emotion-row[data-emotion="joy"]          { background-color: rgba(255, 223, 186, 0.5); }
+        .emotion-row[data-emotion="trust"]        { background-color: rgba(194, 255, 232, 0.5); }
+        .emotion-row[data-emotion="fear"]         { background-color: rgba(183, 224, 250, 0.5); }
+        .emotion-row[data-emotion="surprise"]     { background-color: rgba(255, 201, 219, 0.5); }
+        .emotion-row[data-emotion="sadness"]      { background-color: rgba(193, 210, 252, 0.5); }
+        .emotion-row[data-emotion="disgust"]      { background-color: rgba(197, 255, 197, 0.5); }
+        .emotion-row[data-emotion="anger"]        { background-color: rgba(255, 183, 183, 0.5); }
+        .emotion-row[data-emotion="anticipation"] { background-color: rgba(255, 222, 166, 0.5); }
+        .emotion-row:hover {
+          transform: scale(1.02);
+          box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+          transition: all 0.3s ease-in-out;
+        }
+        /* 自定义 tooltip */
+.emotion-row .tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  background-color: #fff5ec;
+  color: #5a5a5a;
+  font-size: 0.9em;
+  padding: 0.6em 1em;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  right: 110%; 
+  transform: translateY(-50%);
+  width: max-content;
+  max-width: 260px;
+  white-space: normal;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  transition: opacity 0.3s;
+  margin-left: 12px;
+  line-height: 1.4;
+}
+
+.emotion-row:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+        .notebook {
+          background-color: #fffaf6;
+          border-radius: 16px;
+          padding: 1.5em;
+          margin-top: 1em;
+          box-shadow: 0 0 10px rgba(0,0,0,0.03);
+          position: relative;
+          background-image:
+            repeating-linear-gradient(#f7f0e9 0 1px, transparent 1px 36px);
+          border-left: 6px solid #F4C7AB;
+        }
+        .notebook::before {
+          content: "";
+          position: absolute;
+          top: 0.5em;
+          bottom: 0.5em;
+          left: -1.5em;
+          width: 1em;
+          background: radial-gradient(circle at center, #c4a484 20%, transparent 20%) repeat-y;
+          background-size: 1em 2em;
+          z-index: 1;
+        }
+        .emotion-row:hover {
+          transform: scale(1.02);
+          box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+          transition: all 0.3s ease-in-out;
+        }
+        .notebook-background {
+          background-color: transparent;
+          background-image: none;
+          min-height: 100vh;
+          padding-bottom: 2em;
+        }
+        /* 只在 notebook 区域加格子背景 */
+        /* .emotion-notebook {
+          background-color: #fffaf7;
+          background-image: 
+            linear-gradient(to right, #f5e6dd 1px, transparent 1px),
+            linear-gradient(to bottom, #f5e6dd 1px, transparent 1px);
+          background-size: 24px 24px;
+          padding: 1em;
+          border-radius: 16px;
+          box-shadow: 2px 2px 12px rgba(0,0,0,0.04);
+        } */
+                /* 移除格子背景 */
+        .emotion-notebook {
+        background-color: #fffaf7;
+        background-image: none;
+        padding: 1em;
+        border-radius: 16px;
+        box-shadow: 2px 2px 12px rgba(0,0,0,0.04);
+        }
+        .date-banner {
+          background-color: #ffe9dc;
+          border-radius: 12px;
+          padding: 0.5em 1em;
+          margin-bottom: 1em;
+          font-size: 1.1em;
+          color: #8c5c4f;
+          display: inline-block;
+          font-family: 'Quicksand', sans-serif;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+          text-align: center;
+        }
+        .date-banner .emoji {
+          margin-right: 0.4em;
+        }
+        .emotion-block {
+        box-sizing: border-box;
+        padding: 0.25em 0.8em;
+        height: auto;
+        min-height: 1.2em;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 280px;
+        margin-bottom: 0.25em;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        font-family: 'Comic Neue', 'Quicksand', 'Nunito', 'Poppins', sans-serif;
+        font-size: 0.95em;
+        letter-spacing: 0.4px;
+        line-height: 1.1;
+        transition: box-shadow 0.3s, transform 0.3s, color 0.3s;
+        }
+        .emotion-block[data-emotion="joy"]          { background-color: rgba(255, 223, 186, 0.5); }
+        .emotion-block[data-emotion="trust"]        { background-color: rgba(194, 255, 232, 0.5); }
+        .emotion-block[data-emotion="fear"]         { background-color: rgba(183, 224, 250, 0.5); }
+        .emotion-block[data-emotion="surprise"]     { background-color: rgba(255, 201, 219, 0.5); }
+        .emotion-block[data-emotion="sadness"]      { background-color: rgba(193, 210, 252, 0.5); }
+        .emotion-block[data-emotion="disgust"]      { background-color: rgba(197, 255, 197, 0.5); }
+        .emotion-block[data-emotion="anger"]        { background-color: rgba(255, 183, 183, 0.5); }
+        .emotion-block[data-emotion="anticipation"] { background-color: rgba(255, 222, 166, 0.5); }
+        .emotion-block:hover {
+          transform: scale(1.02);
+          box-shadow: 0 3px 12px rgba(255, 172, 140, 0.13);
+          color: #A86956;
+        }
+        .label {
+          font-size: 1em;
+          line-height: 1.2;
+          font-weight: 500;
+        }
+        .emoji {
+          font-size: 1.2em;
+        }
+        /* 统一 notebook-box 和 companion-box 高度 */
+
+.notebook-box,
+.companion-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;                     /* ✅ 填充grid单元格 */
+  min-height: 600px;
+}
+.submitting-box {
+  font-family: 'Quicksand', sans-serif;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 1em;
+  font-size: 1.1em;
+}
+.dots-loader::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 4px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  animation: pulse 1.2s infinite ease-in-out;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+    </style>
+</head>
+<body>
+  <div class="notebook-background">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h2>A Moment to Feel</h2>
+        <div class="form-row">
+            <textarea id="moodInput" placeholder="Take a breath... and write down how you truly feel." rows="1"
+                oninput="autoExpand(this)"></textarea>
+            <button type="button" onclick="sendMood()">Submit</button>
+            <label class="checkbox-label">
+                <input type="checkbox" id="saveMood" style="display: none;">
+                <span id="saveMoodCircle"></span>
+                <span>Save this entry</span>
+            </label>
+        </div>
+        <div id="inputWhisper" style="opacity: 0; transition: opacity 0.6s ease; font-size: 0.95em; color: #A67860; margin-top: 0.6em; font-style: italic;"></div>
+    </div>
+    <div id="mainContent" style="display: flex; flex-direction: row; justify-content: center; align-items: stretch; gap: 2em; margin-top: 2em;">
+        <div id="emotionModule" class="notebook-box" style="flex: 1; min-width: 340px; max-width: 480px;"></div>
+        <div id="conversationModule" class="companion-box" style="flex: 1; min-width: 340px; max-width: 520px;"></div>
+    </div>
+  </div>
+    <script>
+        // Global variables for conversation
+        let currentConversationId = null;
+        let isConversationEnabled = false;
+
+        // Plutchik's 8 basic emotions
+        const BASIC_EMOTIONS = [
+            'joy', 'trust', 'fear', 'surprise', 'sadness', 'disgust', 'anger', 'anticipation'
+        ];
+        // Emotion color map
+        const emotionColors = {
+            joy: '#FFD700',
+            trust: '#2AB58D',
+            fear: '#5A9BD4',
+            surprise: '#FF69B4',
+            sadness: '#6495ED',
+            disgust: '#4CAF50',
+            anger: '#FF4500',
+            anticipation: '#FF9900'
+        };
+        // Corresponding emoji
+        const emotionEmojis = {
+            "joy": "😊",
+            "trust": "🤝",
+            "fear": "😨",
+            "surprise": "😲",
+            "sadness": "😢",
+            "disgust": "😖",
+            "anger": "😠",
+            "anticipation": "🤔"
+        };
+
+        // Auto-expand textarea height
+        function autoExpand(field) {
+            field.style.height = "auto";
+            field.style.height = (field.scrollHeight) + "px";
+        }
+
+        // Toggle round button effect
+        document.getElementById('saveMood').addEventListener('change', function() {
+            const circle = document.getElementById('saveMoodCircle');
+            if (this.checked) {
+            circle.style.background = "#FFAD9F";
+            circle.style.border = "2px solid #FFAD9F";
+            } else {
+            circle.style.background = "#FFF9F2";
+            circle.style.border = "2px solid #FFAD9F";
+            }
+        });
+
+        // Debug mode: if true, use mock data and do not send requests to backend
+        const debugMode = false;
+        const enableEmotionAnalyze = true;    // 🔧 添加这行
+        const enableConversation = true;    // 🔧 添加这行 
+
+        async function sendMood() {
+            const text = document.getElementById('moodInput').value;
+            const save = document.getElementById('saveMood').checked;
+            if (!text) {
+                alert('Please enter your mood.');
+                return;
+            }
+            
+            // Show loading states
+            document.getElementById('emotionModule').innerHTML = '<div class="submitting-box"><span class="dots-loader">Analyzing emotions</span></div>';
+            document.getElementById('conversationModule').innerHTML = '<div class="submitting-box"><span class="dots-loader">Preparing conversation</span></div>';
+
+            let data;
+            if (debugMode) {
+                // Mock data including conversation
+                data = {
+                    intensity_labels: {
+                        joy: "Joy",
+                        sadness: "Sadness", 
+                        anticipation: "Anticipation"
+                    },
+                    emotion_scores: {
+                        joy: 4,
+                        sadness: 2,
+                        anticipation: 3
+                    },
+                    emotion_reasons: {
+                        joy: "It's totally okay to feel happy when you wake up refreshed—what a lovely way to start the day!",
+                        sadness: "You might be feeling a little down, and that's completely okay. Be gentle with yourself.",
+                        anticipation: "It sounds like something is coming up that you're preparing for—it's natural to feel a bit on edge."
+                    },
+                    plutchik_image: "",
+                    conversation_enabled: true,
+                    conversation_id: "mock_conversation_123",
+                    ai_response: "I can sense there's a mix of emotions in what you've shared. It's beautiful that you're taking the time to check in with yourself. Would you like to explore any of these feelings more deeply? I'm here to listen and support you through whatever you're experiencing. 💙"
+                };
+                // Simulate network delay
+                await new Promise(r => setTimeout(r, 1000));
+            } else {
+                try {
+                    const resp = await fetch("http://127.0.0.1:8888/chat", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            text, 
+                            save,
+                            enable_conversation: true  // Enable conversation functionality
+                        })
+                    });
+                    data = await resp.json();
+                } catch (e) {
+                    document.getElementById('emotionModule').innerHTML = 'Request failed. Please check if the backend service is running.';
+                    document.getElementById('conversationModule').innerHTML = '';
+                    return;
+                }
+            }
+
+            // Update global conversation state
+            if (enableConversation && data.conversation_enabled && data.conversation_id) {
+                currentConversationId = data.conversation_id;
+                isConversationEnabled = true;
+            }
+
+            // Render emotion analysis (only if enabled)
+            if (enableEmotionAnalyze) {
+                renderEmotionAnalysis(data);
+            } else {
+                document.getElementById('emotionModule').innerHTML = '<div class="submitting-box">Emotion analysis disabled</div>';
+            }
+            
+            // Render conversation module (only if enabled)
+            if (enableConversation) {
+                renderConversationModule(data);
+            } else {
+                document.getElementById('conversationModule').innerHTML = `
+                    <div id="conversationBox" style="margin-top:0;">
+                        <h3>Companion's Response</h3>
+                        <div id="chatHistory" class="chat-history">
+                            <div style="text-align:center; padding:2em; color:#999; font-style:italic;">
+                                Conversation feature is currently disabled for testing.
+                                <br><br>
+                                Set <code>enableConversation = true</code> to enable this feature.
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            matchModuleHeights();
+        }
+
+        function renderEmotionAnalysis(data) {
+            let intensityLabels = data.intensity_labels || {};
+            let emotionScores = data.emotion_scores || {};
+            let emotionReasons = data.emotion_reasons || {};
+            
+            let primaryHtml = Object.entries(intensityLabels).map(([emotion, label]) => {
+                const moodLabel = emotionEmojis[emotion] || emotion;
+                const starColor = emotionColors[emotion] || "#FFA48E";
+                const score = emotionScores[emotion] || 0;
+                const stars = '★'.repeat(score) + '☆'.repeat(5 - score);
+                const coloredStars = stars.split('').map(s => `<span style="color:${starColor}">${s}</span>`).join('');
+                const reason = emotionReasons[emotion] || "";
+                return `
+                  <div class="emotion-row" data-emotion="${emotion}">
+                    <div class="emotion-left">
+                      <span class="emoji">${moodLabel}</span>
+                      <span class="label">${label.replace(/[\u{1F600}-\u{1F64F}]/gu, '')}</span>
+                    </div>
+                    <div class="emotion-right">${coloredStars}</div>
+                    ${reason ? `<div class="tooltip-text">${reason}</div>` : ""}
+                  </div>
+                `;
+            }).join('');
+
+            // document.getElementById('emotionModule').innerHTML = `
+            //   <div class="notebook emotion-notebook" style="margin-top:0;">
+            //     <div style="font-family:'Comic Neue','Caveat',cursive;font-size:1.15em;color:#A86956;margin-bottom:1em;font-weight:600;">
+            //       📝 Today's Emotional Notes
+            //     </div>
+            //     <div style="display: flex; gap: 2em;">
+            //       <div id="emotionList" style="display: flex; flex-direction: column; gap: 0.6em;">
+            //         ${primaryHtml}
+            //       </div>
+            //       <div style="display: flex; align-items: flex-start;">
+            //         ${data.plutchik_image ? `<img src="data:image/png;base64,${data.plutchik_image}" style="max-width:300px; border:1px solid #ccc; border-radius:12px;">` : ""}
+            //       </div>
+            //     </div>
+            //   </div>
+            // `;
+
+            document.getElementById('emotionModule').innerHTML = `
+            <div class="notebook emotion-notebook" style="margin-top:0;">
+              <div style="font-family:'Comic Neue','Caveat',cursive;font-size:1.15em;color:#A86956;margin-bottom:1em;font-weight:600;">
+                📝 Today's Emotional Notes
+              </div>
+              <div style="margin-bottom: 1em;">
+                <div style="font-family:'Comic Neue','Caveat',cursive;font-size:1em;color:#8C6B5E;margin-bottom:0.8em;font-weight:500;">
+                  📅 ${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                </div>
+                <div id="emotionList" style="display: flex; flex-direction: column; gap: 0.6em;">
+                  ${primaryHtml}
+                </div>
+              </div>
+              ${data.plutchik_image ? `
+                <div style="margin-top: 1.5em;">
+                  <div style="font-family:'Comic Neue','Caveat',cursive;font-size:1em;color:#8C6B5E;margin-bottom:0.8em;font-weight:500;">
+                    🌸 Plutchik Emotion Wheel
+                  </div>
+                  <div style="display: flex; justify-content: center;">
+                    <img src="data:image/png;base64,${data.plutchik_image}" style="max-width:100%; height:auto; border:1px solid #EADDD4; border-radius:12px;">
+                  </div>
+                </div>
+              ` : ""}
+            </div>
+          `;
+        }
+            
+
+        function renderConversationModule(data) {
+            const hasConversation = data.conversation_enabled && data.ai_response;
+            
+            if (!hasConversation) {
+                // Fallback to simple conversation box
+                document.getElementById('conversationModule').innerHTML = `
+                    <div id="conversationBox" style="margin-top:0;">
+                        <h3>Companion's Response</h3>
+                        <div id="chatHistory" class="chat-history">
+                            <div class="bot-bubble">I'm here with you. Feel free to share what's on your mind.</div>
+                        </div>
+                        <div>
+                            <input id="chatInput" type="text" placeholder="Say something back..." disabled />
+                            <button id="chatSendButton" disabled>Send</button>
+                        </div>
+                        <div style="font-size:0.9em; color:#999; margin-top:0.5em; font-style:italic;">
+                            Conversation feature is not available.
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render conversation with AI response
+            document.getElementById('conversationModule').innerHTML = `
+                <div id="conversationBox" style="margin-top:0;">
+                    <h3>Companion's Response</h3>
+                    <div id="chatHistory" class="chat-history">
+                        <div class="bot-bubble">${data.ai_response}</div>
+                    </div>
+                    <div style="margin-top: 1em;">
+                        <input id="chatInput" type="text" placeholder="Share more about how you're feeling..." onkeypress="handleChatKeyPress(event)" />
+                        <button id="chatSendButton" onclick="continueConversation()">Send</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                continueConversation();
+            }
+        }
+
+        async function continueConversation() {
+          console.log('🔧 开始继续对话');
+          console.log('🔧 debugMode:', debugMode);
+          console.log('🔧 currentConversationId:', currentConversationId);
+          console.log('🔧 isConversationEnabled:', isConversationEnabled);
+    
+            const chatInput = document.getElementById('chatInput');
+            const chatSendButton = document.getElementById('chatSendButton');
+            const chatHistory = document.getElementById('chatHistory');
+            
+            const userMessage = chatInput.value.trim();
+            console.log('🔧 用户输入:', userMessage);
+            
+            if (!userMessage) {
+                console.log('❌ 用户输入为空');
+                return;
+            }
+
+            if (!currentConversationId || !isConversationEnabled) {
+                console.log('❌ 对话状态检查失败');
+                console.log('❌ currentConversationId:', currentConversationId);
+                console.log('❌ isConversationEnabled:', isConversationEnabled);
+                alert('Conversation is not available. Please submit a new mood entry.');
+                return;
+            }
+
+
+            // Disable input and show user message
+            chatInput.disabled = true;
+            chatSendButton.disabled = true;
+            chatInput.value = '';
+
+            // Add user message to chat
+            const userBubble = document.createElement('div');
+            userBubble.className = 'user-bubble';
+            userBubble.textContent = userMessage;
+            chatHistory.appendChild(userBubble);
+
+            // Add loading indicator
+            const loadingBubble = document.createElement('div');
+            loadingBubble.className = 'bot-bubble';
+            loadingBubble.innerHTML = '<span class="dots-loader">Thinking</span>';
+            chatHistory.appendChild(loadingBubble);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            let aiResponse;
+            if (debugMode) {
+                // Mock AI response
+                 // ✅ 模拟继续对话，不调用后端
+                console.log('🔧 Debug模式：模拟继续对话');
+                console.log('📤 用户输入:', userMessage);
+                console.log('📤 对话ID:', currentConversationId);
+                const mockResponses = [
+                    "That sounds really meaningful. Can you tell me more about what specifically made you feel that way?",
+                    "I hear you. It's completely normal to have mixed feelings about situations like this. What do you think would help you process these emotions?",
+                    "Thank you for sharing that with me. It takes courage to be so open about your feelings. How are you taking care of yourself right now?",
+                    "I can sense the complexity in what you're experiencing. Sometimes our emotions can feel overwhelming - what helps you feel more grounded when that happens?"
+                ];
+                aiResponse = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+                await new Promise(r => setTimeout(r, 1500)); // Simulate delay
+            } else {
+                try {
+                    const resp = await fetch("http://127.0.0.1:8888/chat", {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            text: userMessage,
+                            enable_conversation: true,
+                            conversation_id: currentConversationId
+                        })
+                    });
+                    const data = await resp.json();
+                    aiResponse = data.ai_response || "I'm here to listen. Please continue sharing.";
+                } catch (e) {
+                    aiResponse = "I'm having trouble connecting right now, but I'm still here with you.";
+                }
+            }
+
+            // Remove loading bubble and add AI response
+            chatHistory.removeChild(loadingBubble);
+            const botBubble = document.createElement('div');
+            botBubble.className = 'bot-bubble';
+            botBubble.textContent = aiResponse;
+            chatHistory.appendChild(botBubble);
+            
+            // Scroll to bottom
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            // Re-enable input
+            chatInput.disabled = false;
+            chatSendButton.disabled = false;
+            chatInput.focus();
+        }
+
+        // function matchModuleHeights() {
+        //   const left = document.getElementById("emotionModule");
+        //   const right = document.getElementById("conversationModule");
+        //   if (left && right) {
+        //     right.style.height = left.offsetHeight + "px";
+        //   }
+        // }
+
+        /* 修改后：*/
+        function matchModuleHeights() {
+          const left = document.getElementById("emotionModule");
+          const right = document.getElementById("conversationModule");
+          if (left && right) {
+            // ✅ 获取左侧实际高度
+            const leftHeight = left.offsetHeight;
+            // ✅ 设置右侧高度匹配
+            right.style.height = leftHeight + "px";
+            // ✅ 确保对话框内容区域也能自适应
+            const chatHistory = document.getElementById("chatHistory");
+            if (chatHistory) {
+              const conversationBox = document.getElementById("conversationBox");
+              const otherElements = conversationBox.offsetHeight - chatHistory.offsetHeight;
+              chatHistory.style.maxHeight = (leftHeight - otherElements - 100) + "px";
+            }
+          }
+        }
+
+        const whisperMessages = [
+          "🌿 You're doing great.",
+          "✨ One thought at a time.",
+          "🌸 Thank you for writing this down.",
+          "🫧 Every feeling matters.",
+          "💖 It's okay to feel what you're feeling.",
+          "☁️ Just breathe, I'm here with you."
+        ];
+
+        let hasWhispered = false;
+
+        function showWhisper() {
+          const el = document.getElementById("inputWhisper");
+          const msg = whisperMessages[Math.floor(Math.random() * whisperMessages.length)];
+          el.innerText = msg;
+          el.classList.add("show");
+
+          setTimeout(() => {
+            el.style.opacity = 0;
+            el.classList.remove("show");
+            el.innerText = "";
+            hasWhispered = false;
+          }, 3500);
+        }
+
+        document.getElementById('moodInput').addEventListener('input', () => {
+          if (!hasWhispered) {
+            showWhisper();
+            hasWhispered = true;
+          }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Input Mood: I have a job interview tomorrow for my dream position. I'm so excited about the possibility, but I can't stop worrying about what if I mess up or they don't think I'm qualified enough.
+
+basic_emotions:
+- anticipation: intensity=4, reason="You mentioned a dream position and excitement, which is wonderful! It sounds like you're really looking forward to this opportunity."
+- fear: intensity=3, reason="You expressed worry about messing up or not being qualified, and that shows you care deeply about doing well. It's totally okay to feel that way!"
+
+companion_response:
+What a mix of feelings! That's such a big step, and it's completely normal to feel both excited and a little nervous. What's been running through your mind the most as you prepare?

@@ -1,0 +1,4 @@
+basic_emotions:
+- joy: intensity=4, reason="Expresses happiness due to a good night's sleep and feeling refreshed."
+- fear: intensity=3, reason="The mention of an important meeting and feeling nervous indicates apprehension."
+blend_emotion: None

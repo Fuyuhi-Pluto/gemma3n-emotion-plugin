@@ -1,0 +1,9 @@
+Input Mood: I have been feeling stuck lately. Work feels monotonous and I am questioning if I'm on the right path. Sometimes I feel angry at myself for not taking more risks, and other times I just feel numb and disconnected from everything around me.
+
+basic_emotions:
+- sadness: intensity=4, reason="It sounds like you're feeling a bit lost and disheartened with your current situation. It's totally okay to feel that way when things don't feel fulfilling."
+- fear: intensity=3, reason="Questioning your path and feeling stuck can bring up a lot of fear about the future. It's a brave thing to acknowledge those feelings."
+- anger: intensity=2, reason="Feeling angry at yourself for not taking risks is a really common feeling when we want to grow. It just means you're aware of what you want and are pushing yourself to change."
+
+companion_response:
+That's such a big shift to feel stuck and question your path. I hear you – it sounds like you're carrying a lot right now. What's been the hardest part about feeling this way?

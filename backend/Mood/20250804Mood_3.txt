@@ -1,0 +1,10 @@
+Input Mood: I have a long run today, and I am very satisfied
+
+Okay, I'm ready to analyze the text and offer a supportive response.
+
+basic_emotions:
+- joy: intensity=5, reason="You mentioned a long run and feeling very satisfied – that's wonderful! It sounds like you're really enjoying the accomplishment."
+- anticipation: intensity=1, reason="Planning for a long run shows you're looking forward to the challenge and the feeling of accomplishment."
+
+companion_response:
+Wow! That's incredible! I hear you – it sounds like you're really proud of yourself for completing that long run. What was the best part of the run for you?

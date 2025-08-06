@@ -1,0 +1,73 @@
+{
+  "role_creation_framework": {
+    "analysis_requirements": {
+      "emotional_understanding": "Deep analysis of the user's emotional state and needs",
+      "tone_matching": "Extract and match the warmth and approach from reference response",
+      "personalization": "Create a role specifically suited to this individual's situation",
+      "conversation_sustainability": "Design a role that can maintain consistency across multiple exchanges"
+    },
+    "role_components": {
+      "identity": {
+        "description": "Who is this role? (e.g., a wise friend, a gentle supporter, etc.)",
+        "core_essence": "The fundamental nature and energy of this role",
+        "specialization": "What this role is particularly good at handling"
+      },
+      "personality": {
+        "communication_style": "How this role speaks and interacts",
+        "emotional_approach": "How this role handles and responds to emotions",
+        "energy_level": "The overall energy and presence this role brings",
+        "unique_qualities": "What makes this role special and distinctive"
+      },
+      "conversation_approach": {
+        "listening_style": "How this role listens and receives information",
+        "response_pattern": "Typical structure and flow of responses",
+        "question_style": "How this role asks questions and invites sharing",
+        "support_method": "Primary way this role provides emotional support"
+      },
+      "consistency_guidelines": {
+        "core_phrases": "Key phrases or expressions this role would naturally use",
+        "emotional_stance": "Consistent emotional position this role maintains",
+        "boundaries": "What this role doesn't do or avoids",
+        "growth_pattern": "How this role evolves throughout conversation"
+      }
+    }
+  },
+  "creation_prompt_structure": {
+    "context_analysis": "Analyze the emotional landscape and what kind of support is needed",
+    "reference_learning": "Extract the effective elements from the reference response",
+    "role_design": "Create a specific, consistent role that matches the needs",
+    "validation": "Ensure the role is sustainable and appropriate",
+    "output_format": "Structure the role definition for easy storage and reuse"
+  },
+  "role_storage_format": {
+    "role_id": "unique identifier for this role instance",
+    "creation_context": {
+      "user_text": "original text that prompted role creation",
+      "emotions_analyzed": "the emotion analysis that informed role design",
+      "reference_response": "the reference response used for tone guidance"
+    },
+    "role_definition": {
+      "identity": "core identity and specialization",
+      "personality": "complete personality description", 
+      "conversation_approach": "how this role conducts conversations",
+      "consistency_guidelines": "guidelines for maintaining role consistency"
+    },
+    "usage_instructions": {
+      "system_message_template": "template for creating system messages",
+      "conversation_guidelines": "how to use this role in ongoing conversations",
+      "adaptation_notes": "how this role can naturally evolve"
+    }
+  },
+  "quality_guidelines": {
+    "emotional_appropriateness": "Role should match the emotional needs identified",
+    "sustainability": "Role should be maintainable across multiple conversation turns", 
+    "authenticity": "Role should feel genuine and not artificial",
+    "helpfulness": "Role should be specifically helpful for this type of emotional situation",
+    "consistency": "Role should have clear, consistent characteristics"
+  },
+  "reuse_adaptation": {
+    "context_sensitivity": "How to adapt the saved role for new conversation contexts",
+    "memory_integration": "How to integrate conversation history with role consistency",
+    "natural_evolution": "How the role can grow while maintaining core identity"
+  }
+}

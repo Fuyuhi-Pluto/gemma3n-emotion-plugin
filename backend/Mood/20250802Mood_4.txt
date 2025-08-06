@@ -1,0 +1,11 @@
+Input Mood: I submitted my thesis today after 3 years of work. It feels surreal that this chapter is finally closing.
+
+basic_emotions:
+- joy: intensity=4, reason="You poured three years of effort into your thesis, and it's finally done! That's a huge accomplishment, and it's wonderful that you're feeling joyful about it."
+- sadness: intensity=2, reason="You mentioned it feels surreal that this chapter is closing. It's natural to feel a little bittersweet when something significant ends after so long."
+
+companion_response:
+Oh wow, that's so hard! I hear you. Three years is a long time to dedicate to something. It sounds like you're really proud of all you accomplished. What's been the best part of this journey for you?
+
+
+

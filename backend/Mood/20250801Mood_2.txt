@@ -1,0 +1,3 @@
+basic_emotions:
+- joy: intensity=4, reason="It's totally okay to feel happy when you wake up feeling refreshed! That's wonderful to hear."
+- anticipation: intensity=3, reason="You mentioned an important meeting tomorrow, and it sounds like you're preparing for it with care. It's natural to feel a little nervous when facing something new."

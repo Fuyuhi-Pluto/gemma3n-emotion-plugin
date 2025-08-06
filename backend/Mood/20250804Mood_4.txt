@@ -1,0 +1,10 @@
+Input Mood: I feel lonely, my friends don't invite me to dinner
+
+Okay, I'm ready to listen and offer support. Here's my analysis of the text: "I feel lonely, my friends don't invite me to dinner."
+
+basic_emotions:
+- sadness: intensity=4, reason="You mentioned feeling lonely and that your friends aren't inviting you to dinner, and that just sounds really difficult. It's totally okay to feel sad when you're missing connection."
+- fear: intensity=2, reason="It's natural to feel a little worried when you're not included, and that can bring up some feelings of fear about missing out or being excluded."
+
+companion_response:
+Oh wow, that's so hard. I hear you. It sounds like you're really hurting right now. What do you think might be making you feel so lonely?

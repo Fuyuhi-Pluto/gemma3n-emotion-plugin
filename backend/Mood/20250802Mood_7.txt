@@ -1,0 +1,13 @@
+Input Mood: I'm feeling a bit nervous today because I'm going boating tonight, and I'm worried I won't be able to keep up.
+
+Okay, I'm ready to analyze the text and offer a supportive response.
+
+basic_emotions:
+- fear: intensity=4, reason="You mentioned feeling nervous and worried about not keeping up on the boat—that sounds like a real feeling of apprehension. It's totally okay to feel that way when facing something new or a little challenging."
+- anticipation: intensity=2, reason="You're looking forward to the boat trip, and that makes sense! It's natural to have a little excitement mixed with a touch of nervousness when anticipating a fun experience."
+
+companion_response:
+Oh wow, that sounds like a big step! That's tough to feel nervous about, but it also sounds like you're really looking forward to the boat trip. What's the most exciting part of the trip for you?
+
+
+

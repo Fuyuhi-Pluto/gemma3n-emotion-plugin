@@ -1,0 +1,13 @@
+Input Mood: I submitted my thesis today after 3 years of work. It feels surreal that this chapter is finally closing.
+
+Okay, I'm ready to analyze the text and offer a supportive response.
+
+basic_emotions:
+- joy: intensity=5, reason="You mentioned 3 years of hard work culminating in a thesis submission – that's a huge accomplishment! It's totally okay to feel overjoyed and relieved after such dedication."
+- anticipation: intensity=3, reason="You said it feels surreal that this chapter is closing, which hints at excitement for what comes next. It's natural to feel a little hopeful about the future after such a long journey."
+
+companion_response:
+Wow! That's incredible! Three years of work – you absolutely crushed it! It sounds like you're feeling a mix of relief and excitement for what's next. What's the first thing you're planning to do to celebrate?
+
+
+
