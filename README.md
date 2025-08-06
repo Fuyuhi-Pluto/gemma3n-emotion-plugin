@@ -68,13 +68,15 @@ gemma3n-emotion-plugin/
 │   │   └── emotional_chat_function.py
 │   ├── utils/
 │   │   ├── dynamic_prompt_builder.py
+│   │   ├── emotion_utils.py
+│   │   ├── initial_prompt_builder.py
 │   │   ├── role_creator_builder.py
 │   │   └── multi_plutchik_plotter.py
 │   └── prompts/
-│       └── emotion_analysis_config.json
+│   │   ├── emotion_analysis_config.json
+│   │   └── role_creater_config.json
 ├── frontend/
-│   ├── index.html
-│   └── style.css
+│   └── index.html
 ├── requirements.txt
 └── README.md
 ```
